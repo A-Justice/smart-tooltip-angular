@@ -53,5 +53,16 @@ eg:
     </div>
 ```
 
+* Have you run into the trouble of having your tooltip cut because of a parent container overflowed hidden? Dont worry, just add the class _overlay_ eg:
+
+
+```
+    <div class="smart-tooltip-container" > 
+                Button 
+        <span class="smart-tooltip stay-right overlay">Welcome</span>  
+    </div>
+```
+*NB: TO PREVENT TROUBLES WITH OVERLAY .. PLEASE SPECIFY DEFINITE WITDH FOR TOOLTIP
+
 <!-- smart-tooltip supports 2 options all of which are optional
 * *type * - _hard | soft_ (Defaults to soft) -->

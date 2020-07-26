@@ -7,6 +7,8 @@
         opacity: 1;
 }
 
+
+
 .smart-tooltip {
         position: absolute;
         background-color: #333;
@@ -125,4 +127,13 @@
         top: initial;
         left: 50%;
          transform: translateX(-50%);
+}
+
+.smart-tooltip-container .smart-tooltip.overlayed{
+       
+        transform: none;
+        top:initial;
+        right:initial;
+        bottom:initial;
+        left:initial;
 }
