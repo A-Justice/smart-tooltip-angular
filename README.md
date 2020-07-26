@@ -8,7 +8,7 @@ A package that allows you tooltip to show intelligently base on where it is
 # Getting Started
 
 *Import library to module*
-
+```
 import { SmartTooltipAngularModule } from 'smart-tooltip-angular';
 
 @NgModule({
@@ -20,6 +20,7 @@ import { SmartTooltipAngularModule } from 'smart-tooltip-angular';
   providers: [],
   bootstrap: []
 })
+```
 
 Html (index.html)
 
