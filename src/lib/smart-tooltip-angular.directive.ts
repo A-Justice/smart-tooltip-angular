@@ -26,152 +26,6 @@ export class SmartTooltipAngularDirective implements OnInit {
 
     this.elementRef.nativeElement.classList.add("smart-tooltip-container");
 
-    var head = document.getElementsByTagName('head')[0];
-    var cs = document.createElement('style');
-    cs.type = 'text/css';
-    cs.innerHTML = `
-            .smart-tooltip-container {
-              position: relative;
-        }
-
-        .smart-tooltip-container:hover .smart-tooltip {
-              visibility: visible;
-              opacity: 1;
-        }
-
-
-
-        .smart-tooltip {
-              position: absolute;
-              background-color: #333;
-              border-radius: 5px;
-              color: #eee;
-              padding: 10px 12px;
-              z-index: 100000;
-              top: 50%;
-              -webkit-transform: translate(-50%, -50%);
-              transform: translate(-50%, -50%);
-              left: 50%;
-              visibility: collapse;
-              transition: all .2s;
-              opacity: 0;
-              outline: none;
-        }
-
-        .smart-tooltip.left-t {
-              -webkit-transform: none;
-              transform: none;
-              right: calc(100% + 5px);
-              left: initial;
-              top: initial;
-              bottom: 5px;
-
-              
-        }
-
-        .smart-tooltip.left-b {
-              -webkit-transform: none;
-              transform: none;
-              right: calc(100% + 5px);
-              left: initial;
-              top: 5px;
-              bottom: initial;
-        }
-
-        .smart-tooltip.left {
-              right: calc(100% + 5px);
-              left: initial;
-              top: 50%;
-              -webkit-transform: translateY(-50%);
-              transform: translateY(-50%);
-        }
-
-        .smart-tooltip.right-b {
-              -webkit-transform: none;
-              transform: none;
-              left: calc(100% + 5px);
-              top: 5px;
-              right: initial;
-              bottom: initial;    
-        }
-
-        .smart-tooltip.right-t {
-              -webkit-transform: none;
-              transform: none;
-              /* display: none; */
-              left: calc(100% + 5px);
-              top: initial;
-              bottom: 5px;
-        }
-
-        .smart-tooltip.right {
-              left: calc(100% + 5px);
-              top: 50%;
-              bottom: initial;
-              right: initial;
-              -webkit-transform: translateY(-50%);
-              transform: translateY(-50%);
-        }
-
-        .smart-tooltip.bottom-r {
-              /* display: none; */
-              top: calc(100% + 5px);
-              bottom: initial;
-              left: 5px;
-              right:initial;
-              transform: none;
-        }
-        .smart-tooltip.bottom-l {
-              /* display: none; */
-              top: calc(100% + 5px);
-              bottom: initial;
-              right: 5px;
-              left:initial;
-              transform: none;
-        }
-        .smart-tooltip.bottom {
-              /* display: none; */
-              top: calc(100% + 5px);
-              bottom: initial;
-              left: 50%;
-              transform: translateX(-50%);
-        }
-
-        .smart-tooltip.top-r {
-              /* display: none; */
-              bottom: calc(100% + 5px);
-              top: initial;
-              left: 5px;
-              right:initial;
-              transform: none;
-        }
-        .smart-tooltip.top-l {
-              /* display: none; */
-              bottom: calc(100% + 5px);
-              top: initial;
-              right: 5px;
-              left: initial;
-              transform: none;
-        }
-        .smart-tooltip.top {
-              /* display: none; */
-              bottom: calc(100% + 5px);
-              top: initial;
-              left: 50%;
-              transform: translateX(-50%);
-        }
-
-        .smart-tooltip-container .smart-tooltip.overlayed{
-            
-              transform: none;
-              top:initial;
-              right:initial;
-              bottom:initial;
-              left:initial;
-        }
-    `;
-    head.appendChild(cs);
-
   }
 
   ngOnInit(): void {
@@ -233,12 +87,12 @@ export class SmartTooltipAngularDirective implements OnInit {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "left")) {
           tooltip.classList.add('left');
         }
-      } else if (topHalf < halfTooltip) {
+      } else if (topHalf <= halfTooltip) {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "left-b")) {
           tooltip.classList.add('left-b');
         }
 
-      } else if (bottomHalf < halfTooltip) {
+      } else if (bottomHalf <= halfTooltip) {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "left-t")) {
           tooltip.classList.add('left-t');
         }
@@ -257,11 +111,11 @@ export class SmartTooltipAngularDirective implements OnInit {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "right")) {
           tooltip.classList.add('right');
         }
-      } else if (topHalf < halfTooltip) {
+      } else if (topHalf <= halfTooltip) {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "right-b")) {
           tooltip.classList.add('right-b');
         }
-      } else if (bottomHalf < halfTooltip) {
+      } else if (bottomHalf <= halfTooltip) {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "right-t")) {
           tooltip.classList.add('right-t');
         }
@@ -279,12 +133,12 @@ export class SmartTooltipAngularDirective implements OnInit {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "top")) {
           tooltip.classList.add('top');
         }
-      } else if (leftHalf < halfTooltip) {
+      } else if (leftHalf <= halfTooltip) {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "top-r")) {
           tooltip.classList.add('top-r');
         }
 
-      } else if (rightHalf < halfTooltip) {
+      } else if (rightHalf <= halfTooltip) {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "top-l")) {
           tooltip.classList.add('top-l');
         }
@@ -305,12 +159,12 @@ export class SmartTooltipAngularDirective implements OnInit {
           tooltip.classList.add('bottom');
         }
 
-      } else if (leftHalf < halfTooltip) {
+      } else if (leftHalf <= halfTooltip) {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "bottom-r")) {
           tooltip.classList.add('bottom-r');
         }
 
-      } else if (rightHalf < halfTooltip) {
+      } else if (rightHalf <= halfTooltip) {
         if (!this.manipulateOverlayIfPresent(btnclient, tooltip, "bottom-l")) {
           tooltip.classList.add('bottom-l');
         }
