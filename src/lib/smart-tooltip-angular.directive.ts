@@ -21,16 +21,45 @@ export class SmartTooltipAngularDirective implements OnInit {
   @HostListener("mouseleave") mouseLeave() {
     this.mouseLeft(this.elementRef);
   }
-  
-  constructor(private elementRef:ElementRef) {
 
-    this.elementRef.nativeElement.classList.add("smart-tooltip-container");
-
+  constructor(private elementRef: ElementRef) {
+    let tooltipContainer = elementRef.nativeElement;
+    tooltipContainer.classList.add("smart-tooltip-container");
   }
 
   ngOnInit(): void {
+    let tooltipContainer = this.elementRef.nativeElement;
+    let tooltip = tooltipContainer.querySelector(".smart-tooltip");
+    //Assign tabIndex to allow element to be focusable
+    if(tooltip){
+      tooltip.tabIndex = 1;
+
+      tooltip.addEventListener("blur", (event) => {
+        this.toolTipBlured(event.target);
+      });
+    }
   }
 
+
+  toolTipBlured(tooltip) {
+    if (this.removeOverlayClass(tooltip)) {
+
+      let tooltipRect = tooltip.getBoundingClientRect();
+
+      //Reset Inline Styles
+      tooltip.style.position = "";
+      tooltip.style.top = "";
+      tooltip.style.left = "";
+      tooltip.style.bottom = "";
+      tooltip.style.right = "";
+
+      tooltip.classList.add("overlay");
+    }
+
+    tooltip.style.visibility = "collapse"
+    tooltip.style.opacity = "0";
+    tooltip.style.display = "none";
+  }
 
 
   myfunc(elementRef: ElementRef) {
@@ -211,27 +240,40 @@ export class SmartTooltipAngularDirective implements OnInit {
 
     if (!tooltip) return;
 
-    if (this.removeOverlayClass(tooltip)) {
 
-      let tooltipRect = tooltip.getBoundingClientRect();
+    var stickyTime = this.getStickyTime(tooltip);
 
+    if (!isNaN(stickyTime)) {
+      setTimeout(() => {
 
-      //Reset Inline Styles
-      tooltip.style.position = "";
-      tooltip.style.top = "";
-      tooltip.style.left = "";
-      tooltip.style.bottom = "";
-      tooltip.style.right = "";
+        if (this.removeOverlayClass(tooltip)) {
+
+          let tooltipRect = tooltip.getBoundingClientRect();
 
 
+          //Reset Inline Styles
+          tooltip.style.position = "";
+          tooltip.style.top = "";
+          tooltip.style.left = "";
+          tooltip.style.bottom = "";
+          tooltip.style.right = "";
 
-      tooltip.classList.add("overlay");
+
+
+          tooltip.classList.add("overlay");
+        }
+
+        //Make sure its not visible after mouse has left
+        tooltip.style.visibility = "collapse"
+        tooltip.style.opacity = "0";
+        tooltip.style.display = "none";
+
+      }, stickyTime);
+    } else {
+      tooltip.focus();
     }
 
-    //Make sure its not visible after mouse has left
-    tooltip.style.visibility = "collapse"
-    tooltip.style.opacity = "0";
-    tooltip.style.display = "none";
+
   }
 
   removeOverlayClass(tooltip) {
@@ -285,7 +327,7 @@ export class SmartTooltipAngularDirective implements OnInit {
 
       return overlayCoordinates;
     } else if (tooltipPostion.includes("left")) {
-     
+
       let overlayCoordinates: any = {
         right: (windowWidth - btnclient.left) + this.offSetValue,
         top: (btnclient.top + (btnclient.height / 2)) - (tooltipclient.height / 2),
@@ -369,5 +411,28 @@ export class SmartTooltipAngularDirective implements OnInit {
     return false;
   }
 
+  /**
+   * Get the sticky time on the tooltip or returns zero if none is found
+   * @param {HtmlElement} tooltip The tooltip element
+   */
+  getStickyTime(tooltip) {
 
+    try {
+      for (let item of tooltip.classList) {
+        if (item.includes("stick")) {
+          if (item.includes("-")) {
+            let numberstring = item.split("-")[1];
+            return +numberstring;
+          } else {
+            return Number.NaN;
+          }
+        }
+      }
+    } catch{
+      return 0;
+    }
+
+    //return zero if tooltip doesn't have a sticky class
+    return 0;
+  }
 }

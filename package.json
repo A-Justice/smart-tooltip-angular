@@ -1,10 +1,11 @@
 {
   "name": "smart-tooltip-angular",
-  "version": "1.0.8",
+  "version": "1.1.1",
   "peerDependencies": {
     "@angular/common": "^9.1.12",
     "@angular/core": "^9.1.12"
   },
+  "keywords": ["tooltip","smart-tooltip","intelligent","aware","content"],
   "dependencies": {
     "tslib": "^1.10.0"
   },"repository": {
